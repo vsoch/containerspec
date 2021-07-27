@@ -1,20 +1,20 @@
 package spec
 
 type Microarchitecture struct {
-	Name       string     `json:name`
-	From       []string   `json:from`
-	Vendor     []string   `json:vendor`
-	Generation int        `json:generation`
-	Features   []string   `json:features`
-	Compilers  []Compiler `json:compilers`
+	Name       string                `json:"name"`
+	From       []string              `json:"from"`
+	Vendor     []string              `json:"vendor"`
+	Generation int                   `json:"generation"`
+	Features   []string              `json:"features"`
+	Compilers  map[string][]Compiler `json:"compilers"`
 }
 
 type Compiler struct {
-	Name     string   `json:name`
-	Versions string   `json:versions`
-	Flags    string   `json:flags`
-	Family   []string `json:family`
-	Warnings []string `json:warnings`
+	Name     string   `json:"name"`
+	Versions string   `json:"versions"`
+	Flags    string   `json:"flags"`
+	Family   []string `json:"family"`
+	Warnings []string `json:"warnings"`
 }
 
 var CpuArches = map[string]Microarchitecture{
@@ -54,1107 +54,1112 @@ var CpuArches = map[string]Microarchitecture{
 		Name:   "x86_64",
 		Vendor: []string{"generic"},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "gcc",
 					Versions: "4.2.0:",
 					Flags:    "-march={name} -mtune=generic",
 				},
-				Compiler{
+				{
 					Name:     "gcc",
 					Versions: ":4.1.2",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"apple-clang": []Compiler{
-				Compiler{
+			"apple-clang": {
+				{
 					Versions: ":",
 					Name:     "x86-64",
 					Flags:    "-march={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: ":",
 					Name:     "x86-64",
 					Flags:    "-march={name} -mtune=generic",
 				},
 			},
-			"aocc": []Compiler{
-				Compiler{
+			"aocc": {
+				{
 					Versions: "2.2:",
 					Name:     "x86-64",
 					Flags:    "-march={name} -mtune=generic",
 				},
 			},
-			"intel": []Compiler{
-				Compiler{
+			"intel": {
+				{
 					Versions: ":",
 					Name:     "pentium4",
 					Flags:    "-march={name} -mtune=generic",
 				},
 			},
 		},
-		"x86_64_v2": {
-			Name:   "x86_64_v2",
-			From:   []string{"x86_64"},
-			Vendor: []string{"generic"},
-			Features: []string{"cx16",
-				"lahf_lm",
-				"mmx",
-				"sse",
-				"sse2",
-				"ssse3",
-				"sse4_1",
-				"sse4_2",
-				"popcnt"},
-			Compilers: map[string][]Compiler{
-				"gcc": []Compiler{
-					Compiler{
-						Versions: "11.1:",
-						Name:     "x86-64-v2",
-						Flags:    "-march={name} -mtune=generic",
-					},
-					Compiler{
-						Versions: "4.6:11.0",
-						Name:     "x86-64",
-						Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3",
-					},
+	},
+	"x86_64_v2": {
+		Name:   "x86_64_v2",
+		From:   []string{"x86_64"},
+		Vendor: []string{"generic"},
+		Features: []string{"cx16",
+			"lahf_lm",
+			"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "11.1:",
+					Name:     "x86-64-v2",
+					Flags:    "-march={name} -mtune=generic",
 				},
-				"clang": []Compiler{
-					Compiler{
-						Versions: "12.0:",
-						Name:     "x86-64-v2",
-						Flags:    "-march={name} -mtune=generic",
-					},
-					Compiler{
-						Versions: "3.9:11.1",
-						Name:     "x86-64",
-						Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3",
-					},
+				{
+					Versions: "4.6:11.0",
+					Name:     "x86-64",
+					Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3",
 				},
-			}},
-		"x86_64_v3": {
-			From:   []string{"x86_64_v2"},
-			Vendor: []string{"generic"},
-			Features: []string{"cx16",
-				"lahf_lm",
-				"mmx",
-				"sse",
-				"sse2",
-				"ssse3",
-				"sse4_1",
-				"sse4_2",
-				"popcnt",
-				"avx",
-				"avx2",
-				"bmi1",
-				"bmi2",
-				"f16c",
-				"fma",
-				"abm",
-				"movbe",
-				"xsave"},
-			Compilers: map[string][]Compiler{
-				"gcc": []Compiler{
-					Compiler{
-						Versions: "11.1:",
-						Name:     "x86-64-v3",
-						Flags:    "-march={name} -mtune=generic",
-					},
-					Compiler{
-						Versions: "4.8:11.0",
-						Name:     "x86-64",
-						Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave",
-					},
+			},
+			"clang": {
+				{
+					Versions: "12.0:",
+					Name:     "x86-64-v2",
+					Flags:    "-march={name} -mtune=generic",
 				},
-				"clang": []Compiler{
-					Compiler{
-						Versions: "12.0:",
-						Name:     "x86-64-v3",
-						Flags:    "-march={name} -mtune=generic",
-					},
-					Compiler{
-						Versions: "3.9:11.1",
-						Name:     "x86-64",
-						Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave",
-					},
+				{
+					Versions: "3.9:11.1",
+					Name:     "x86-64",
+					Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3",
 				},
-				"apple-clang": []Compiler{
+			},
+		},
+	},
+	"x86_64_v3": {
+		From:   []string{"x86_64_v2"},
+		Vendor: []string{"generic"},
+		Features: []string{"cx16",
+			"lahf_lm",
+			"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"avx",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"f16c",
+			"fma",
+			"abm",
+			"movbe",
+			"xsave"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "11.1:",
+					Name:     "x86-64-v3",
+					Flags:    "-march={name} -mtune=generic",
+				},
+				{
+					Versions: "4.8:11.0",
+					Name:     "x86-64",
+					Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave",
+				},
+			},
+			"clang": {
+				{
+					Versions: "12.0:",
+					Name:     "x86-64-v3",
+					Flags:    "-march={name} -mtune=generic",
+				},
+				{
+					Versions: "3.9:11.1",
+					Name:     "x86-64",
+					Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave",
+				},
+			},
+			"apple-clang": {
+				{
 					Versions: "8.0:",
 					Name:     "x86-64",
 					Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave",
 				},
 			},
 		},
-		"x86_64_v3": {
+	},
+	"x86_64_v4": {
 
-			From:   []string{"x86_64_v3"},
-			Vendor: []string{"generic"},
-			Features: []string{"cx16",
-				"lahf_lm",
-				"mmx",
-				"sse",
-				"sse2",
-				"ssse3",
-				"sse4_1",
-				"sse4_2",
-				"popcnt",
-				"avx",
-				"avx2",
-				"bmi1",
-				"bmi2",
-				"f16c",
-				"fma",
-				"abm",
-				"movbe",
-				"xsave",
-				"avx512f",
-				"avx512bw",
-				"avx512cd",
-				"avx512dq",
-				"avx512vl"},
-			Compilers: map[string][]Compiler{
-				"gcc": []Compiler{
-					Compiler{
-						Versions: "11.1:",
-						Name:     "x86-64-v4",
-						Flags:    "-march={name} -mtune=generic",
-					},
-					Compiler{
-						Versions: "6.0:11.0",
-						Name:     "x86-64",
-						Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave -mavx512f -mavx512bw -mavx512cd -mavx512dq -mavx512vl",
-					},
+		From:   []string{"x86_64_v3"},
+		Vendor: []string{"generic"},
+		Features: []string{"cx16",
+			"lahf_lm",
+			"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"avx",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"f16c",
+			"fma",
+			"abm",
+			"movbe",
+			"xsave",
+			"avx512f",
+			"avx512bw",
+			"avx512cd",
+			"avx512dq",
+			"avx512vl"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "11.1:",
+					Name:     "x86-64-v4",
+					Flags:    "-march={name} -mtune=generic",
 				},
-				"clang": []Compiler{
-					Compiler{
-						Versions: "12.0:",
-						Name:     "x86-64-v4",
-						Flags:    "-march={name} -mtune=generic",
-					},
-					Compiler{
-						Versions: "3.9:11.1",
-						Name:     "x86-64",
-						Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave -mavx512f -mavx512bw -mavx512cd -mavx512dq -mavx512vl",
-					},
+				{
+					Versions: "6.0:11.0",
+					Name:     "x86-64",
+					Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave -mavx512f -mavx512bw -mavx512cd -mavx512dq -mavx512vl",
 				},
-				"apple-clang": []Compiler{
-					Compiler{
-						Versions: "8.0:",
-						Name:     "x86-64",
-						Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave -mavx512f -mavx512bw -mavx512cd -mavx512dq -mavx512vl",
-					},
+			},
+			"clang": {
+				{
+					Versions: "12.0:",
+					Name:     "x86-64-v4",
+					Flags:    "-march={name} -mtune=generic",
+				},
+				{
+					Versions: "3.9:11.1",
+					Name:     "x86-64",
+					Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave -mavx512f -mavx512bw -mavx512cd -mavx512dq -mavx512vl",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Name:     "x86-64",
+					Flags:    "-march={name} -mtune=generic -mcx16 -msahf -mpopcnt -msse3 -msse4.1 -msse4.2 -mssse3 -mavx -mavx2 -mbmi -mbmi2 -mf16c -mfma -mlzcnt -mmovbe -mxsave -mavx512f -mavx512bw -mavx512cd -mavx512dq -mavx512vl",
 				},
 			},
 		},
-		"nocona": {
-			From:   []string{"x86_64"},
-			Vendor: []string{"GenuineIntel"},
-			Features: []string{"mmx",
-				"sse",
-				"sse2",
-				"sse3"},
-			Compilers: map[string][]Compiler{
-				"gcc": []Compiler{
-					Compiler{
-						Versions: "4.0.4:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"clang": []Compiler{
-					Compiler{
-						Versions: "3.9:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"aocc": []Compiler{
-					Compiler{
-						Versions: "2.2:",
-						Flags:    "-march={name} -mtune=generic",
-					},
-				},
-				"apple-clang": []Compiler{
-					Compiler{
-						Versions: "8.0:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"intel": []Compiler{
-					Compiler{
-						Versions: "16.0:",
-						Name:     "pentium4",
-						Flags:    "-march={name} -mtune=generic",
-					},
+	},
+	"nocona": {
+		From:   []string{"x86_64"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"sse3"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "4.0.4:",
+					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-		},
-		"core2": {
-			From:   []string{"nocona"},
-			Vendor: []string{"GenuineIntel"},
-			Features: []string{"mmx",
-				"sse",
-				"sse2",
-				"ssse3"},
-			Compilers: map[string][]Compiler{
-				"gcc": []Compiler{
-					Compiler{
-						Versions: "4.3.0:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"clang": []Compiler{
-					Compiler{
-						Versions: "3.9:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"aocc": []Compiler{
-					Compiler{
-						Versions: "2.2:",
-						Flags:    "-march={name} -mtune=generic",
-					},
-				},
-				"apple-clang": []Compiler{
-					Compiler{
-						Versions: "8.0:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"intel": []Compiler{
-					Compiler{
-						Versions: "16.0:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-			},
-		},
-		"nehalem": {
-			From:   []string{"core2", "x86_64_v2"},
-			Vendor: []string{"GenuineIntel"},
-			Features: []string{"mmx",
-				"sse",
-				"sse2",
-				"ssse3",
-				"sse4_1",
-				"sse4_2",
-				"popcnt"},
-			Compilers: map[string][]Compiler{
-				"gcc": []Compiler{
-					Compiler{
-						Versions: "4.9:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-					Compiler{
-						Versions: "4.6:4.8.5",
-						Name:     "corei7",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"clang": []Compiler{
-					Compiler{
-						Versions: "3.9:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"aocc": []Compiler{
-					Compiler{
-						Versions: "2.2:",
-						Flags:    "-march={name} -mtune=generic",
-					},
-				},
-				"apple-clang": []Compiler{
-					Compiler{
-						Versions: "8.0:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"intel": []Compiler{
-					Compiler{
-						Versions: "16.0:",
-						Name:     "corei7",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-			},
-		},
-		"westmere": {
-			From:   []string{"nehalem"},
-			Vendor: []string{"GenuineIntel"},
-			Features: []string{"mmx",
-				"sse",
-				"sse2",
-				"ssse3",
-				"sse4_1",
-				"sse4_2",
-				"popcnt",
-				"aes",
-				"pclmulqdq"},
-			Compilers: map[string][]Compiler{
-				"gcc": []Compiler{
-					Compiler{
-						Versions: "4.9:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"clang": []Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Flags:    "-march={name} -mtune={name}",
 				},
-				"aocc": []Compiler{
-					Compiler{
-						Versions: "2.2:",
-						Flags:    "-march={name} -mtune=generic",
-					},
-				},
-				"apple-clang": []Compiler{
-					Compiler{
-						Versions: "8.0:",
-						Flags:    "-march={name} -mtune={name}",
-					},
-				},
-				"intel": []Compiler{
-					Compiler{
-						Versions: "16.0:",
-						Name:     "corei7",
-						Flags:    "-march={name} -mtune={name}",
-					},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune=generic",
 				},
 			},
-			"sandybridge": {
-				From:   []string{"westmere"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "4.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-						Compiler{
-							Versions: "4.6:4.8.5",
-							Name:     "corei7-avx",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "3.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Flags:    "-march={name} -mtune=generic",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "18.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-						Compiler{
-							Versions: "16.0:17.9.0",
-							Name:     "corei7-avx",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"ivybridge": {
-				From:   []string{"sandybridge"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "4.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-						Compiler{
-							Versions: "4.6:4.8.5",
-							Name:     "core-avx-i",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "3.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "16.0:17.9.0",
-							Name:     "core-avx-i",
-							Flags:    "-march={name} -mtune={name}",
-						},
-						Compiler{
-							Versions: "18.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"haswell": {
-				From:   []string{"ivybridge", "x86_64_v3"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c",
-					"movbe",
-					"fma",
-					"avx2",
-					"bmi1",
-					"bmi2"},
-
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "4.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-						Compiler{
-							Versions: "4.8:4.8.5",
-							Name:     "core-avx2",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-
-					"clang": []Compiler{
-						Compiler{
-							Versions: "3.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "16.0:17.9.0",
-							Name:     "core-avx2",
-							Flags:    "-march={name} -mtune={name}",
-						},
-						Compiler{
-							Versions: "18.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"broadwell": {
-				From:   []string{"haswell"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c",
-					"movbe",
-					"fma",
-					"avx2",
-					"bmi1",
-					"bmi2",
-					"rdseed",
-					"adx"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "4.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "3.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "18.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"skylake": {
-				From:   []string{"broadwell"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c",
-					"movbe",
-					"fma",
-					"avx2",
-					"bmi1",
-					"bmi2",
-					"rdseed",
-					"adx",
-					"clflushopt",
-					"xsavec",
-					"xsaveopt"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "6.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "3.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "18.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"mic_knl": {
-				From:   []string{"broadwell"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c",
-					"movbe",
-					"avx2",
-					"fma",
-					"avx2",
-					"bmi1",
-					"bmi2",
-					"rdseed",
-					"adx",
-					"avx512f",
-					"avx512pf",
-					"avx512er",
-					"avx512cd"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "5.1:",
-							Name:     "knl",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "3.9:",
-							Name:     "knl",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Name:     "knl",
-							Flags:    "-march={name} -mtune=generic",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "18.0:",
-							Name:     "knl",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"skylake_avx512": {
-				From:   []string{"skylake", "x86_64_v4"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c",
-					"movbe",
-					"fma",
-					"avx2",
-					"bmi1",
-					"bmi2",
-					"rdseed",
-					"adx",
-					"clflushopt",
-					"xsavec",
-					"xsaveopt",
-					"avx512f",
-					"clwb",
-					"avx512vl",
-					"avx512bw",
-					"avx512dq",
-					"avx512cd"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "6.0:",
-							Name:     "skylake-avx512",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "3.9:",
-							Name:     "skylake-avx512",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Name:     "skylake-avx512",
-							Flags:    "-march={name} -mtune=generic",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "18.0:",
-							Name:     "skylake-avx512",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"cannonlake": {
-				From:   []string{"skylake"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c",
-					"movbe",
-					"fma",
-					"avx2",
-					"bmi1",
-					"bmi2",
-					"rdseed",
-					"adx",
-					"clflushopt",
-					"xsavec",
-					"xsaveopt",
-					"avx512f",
-					"avx512vl",
-					"avx512bw",
-					"avx512dq",
-					"avx512cd",
-					"avx512vbmi",
-					"avx512ifma",
-					"sha",
-					"umip"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Clang{
-							Versions: "3.9:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "18.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"cascadelake": {
-				From:   []string{"skylake_avx512"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c",
-					"movbe",
-					"fma",
-					"avx2",
-					"bmi1",
-					"bmi2",
-					"rdseed",
-					"adx",
-					"clflushopt",
-					"xsavec",
-					"xsaveopt",
-					"avx512f",
-					"clwb",
-					"avx512vl",
-					"avx512bw",
-					"avx512dq",
-					"avx512cd",
-					"avx512_vnni"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Versions: "9.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "11.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "19.0.1:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"icelake": {
-				From:   []string{"cascadelake", "cannonlake"},
-				Vendor: []string{"GenuineIntel"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"ssse3",
-					"sse4_1",
-					"sse4_2",
-					"popcnt",
-					"aes",
-					"pclmulqdq",
-					"avx",
-					"rdrand",
-					"f16c",
-					"movbe",
-					"fma",
-					"avx2",
-					"bmi1",
-					"bmi2",
-					"rdseed",
-					"adx",
-					"clflushopt",
-					"xsavec",
-					"xsaveopt",
-					"avx512f",
-					"avx512vl",
-					"avx512bw",
-					"avx512dq",
-					"avx512cd",
-					"avx512vbmi",
-					"avx512ifma",
-					"sha_ni",
-					"umip",
-					"clwb",
-					"rdpid",
-					"gfni",
-					"avx512_vbmi2",
-					"avx512_vpopcntdq",
-					"avx512_bitalg",
-					"avx512_vnni",
-					"vpclmulqdq",
-					"vaes"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Name:     "icelake-client",
-							Versions: "8.0:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "7.0:",
-							Name:     "icelake-client",
-							Flags:    "-march={name} -mtune={name}",
-						},
-						Compiler{
-							Versions: "6.0:6.9",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Name:     "icelake-client",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"apple-clang": []Compiler{
-						Compiler{
-							Versions: "10.0.1:",
-							Name:     "icelake-client",
-							Flags:    "-march={name} -mtune={name}",
-						},
-						Compiler{
-							Versions: "10.0.0:10.0.99",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "18.0:",
-							Name:     "icelake-client",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-				},
-			},
-			"k10": {
-				From:   []string{"x86_64"},
-				Vendor: []string{"AuthenticAMD"},
-				Features: []string{"mmx",
-					"sse",
-					"sse2",
-					"sse4a",
-					"abm",
-					"cx16",
-					"3dnow",
-					"3dnowext"},
-				Compilers: map[string][]Compiler{
-					"gcc": []Compiler{
-						Compiler{
-							Name:     "amdfam10",
-							Versions: "4.3:",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"clang": []Compiler{
-						Compiler{
-							Versions: "3.9:",
-							Name:     "amdfam10",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"aocc": []Compiler{
-						Compiler{
-							Versions: "2.2:",
-							Name:     "amdfam10",
-							Flags:    "-march={name} -mtune={name}",
-						},
-					},
-					"intel": []Compiler{
-						Compiler{
-							Versions: "16.0:",
-							Flags:    "-msse2",
-							Warnings: []string{"Intel's compilers may or may not optimize to the same degree for non-Intel microprocessors for optimizations that are not unique to Intel microprocessors"},
-						},
-					},
+			"intel": {
+				{
+					Versions: "16.0:",
+					Name:     "pentium4",
+					Flags:    "-march={name} -mtune=generic",
 				},
 			},
 		},
-		"bulldozer": {
-			From:   []string{"x86_64_v2"},
-			Vendor: []string{"AuthenticAMD"},
-			Features: []string{"mmx",
-				"sse",
-				"sse2",
-				"sse4a",
-				"abm",
-				"avx",
-				"xop",
-				"fma4",
-				"aes",
-				"pclmulqdq",
-				"cx16",
-				"ssse3",
-				"sse4_1",
-				"sse4_2"},
+	},
+	"core2": {
+		From:   []string{"nocona"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "4.3.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune=generic",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "16.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"nehalem": {
+		From:   []string{"core2", "x86_64_v2"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "4.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+				{
+					Versions: "4.6:4.8.5",
+					Name:     "corei7",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune=generic",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "16.0:",
+					Name:     "corei7",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"westmere": {
+		From:   []string{"nehalem"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "4.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune=generic",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "16.0:",
+					Name:     "corei7",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"sandybridge": {
+		From:   []string{"westmere"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "4.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+				{
+					Versions: "4.6:4.8.5",
+					Name:     "corei7-avx",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune=generic",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "18.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+				{
+					Versions: "16.0:17.9.0",
+					Name:     "corei7-avx",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"ivybridge": {
+		From:   []string{"sandybridge"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "4.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+				{
+					Versions: "4.6:4.8.5",
+					Name:     "core-avx-i",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "16.0:17.9.0",
+					Name:     "core-avx-i",
+					Flags:    "-march={name} -mtune={name}",
+				},
+				{
+					Versions: "18.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"haswell": {
+		From:   []string{"ivybridge", "x86_64_v3"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c",
+			"movbe",
+			"fma",
+			"avx2",
+			"bmi1",
+			"bmi2"},
 
-			Compilers: map[string][]Compiler{
-				"gcc": []Compiler{
-					Compiler{
-						Name:     "bdver1",
-						Versions: "4.7:",
-						Flags:    "-march={name} -mtune={name}",
-					},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "4.9:",
+					Flags:    "-march={name} -mtune={name}",
 				},
-				"clang": []Compiler{
-					Compiler{
-						Versions: "3.9:",
-						Name:     "bdver1",
-						Flags:    "-march={name} -mtune={name}",
-					},
+				{
+					Versions: "4.8:4.8.5",
+					Name:     "core-avx2",
+					Flags:    "-march={name} -mtune={name}",
 				},
-				"aocc": []Compiler{
-					Compiler{
-						Versions: "2.2:",
-						Name:     "bdver1",
-						Flags:    "-march={name} -mtune={name}",
-					},
+			},
+
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
 				},
-				"intel": []Compiler{
-					Compiler{
-						Versions: "16.0:",
-						Flags:    "-msse3",
-						Warnings: []string{"Intel's compilers may or may not optimize to the same degree for non-Intel microprocessors for optimizations that are not unique to Intel microprocessors"},
-					},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "16.0:17.9.0",
+					Name:     "core-avx2",
+					Flags:    "-march={name} -mtune={name}",
+				},
+				{
+					Versions: "18.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"broadwell": {
+		From:   []string{"haswell"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c",
+			"movbe",
+			"fma",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"rdseed",
+			"adx"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "4.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "18.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"skylake": {
+		From:   []string{"broadwell"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c",
+			"movbe",
+			"fma",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"rdseed",
+			"adx",
+			"clflushopt",
+			"xsavec",
+			"xsaveopt"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "6.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "18.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"mic_knl": {
+		From:   []string{"broadwell"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c",
+			"movbe",
+			"avx2",
+			"fma",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"rdseed",
+			"adx",
+			"avx512f",
+			"avx512pf",
+			"avx512er",
+			"avx512cd"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "5.1:",
+					Name:     "knl",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Name:     "knl",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Name:     "knl",
+					Flags:    "-march={name} -mtune=generic",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "18.0:",
+					Name:     "knl",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"skylake_avx512": {
+		From:   []string{"skylake", "x86_64_v4"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c",
+			"movbe",
+			"fma",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"rdseed",
+			"adx",
+			"clflushopt",
+			"xsavec",
+			"xsaveopt",
+			"avx512f",
+			"clwb",
+			"avx512vl",
+			"avx512bw",
+			"avx512dq",
+			"avx512cd"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "6.0:",
+					Name:     "skylake-avx512",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Name:     "skylake-avx512",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Name:     "skylake-avx512",
+					Flags:    "-march={name} -mtune=generic",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "18.0:",
+					Name:     "skylake-avx512",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"cannonlake": {
+		From:   []string{"skylake"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c",
+			"movbe",
+			"fma",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"rdseed",
+			"adx",
+			"clflushopt",
+			"xsavec",
+			"xsaveopt",
+			"avx512f",
+			"avx512vl",
+			"avx512bw",
+			"avx512dq",
+			"avx512cd",
+			"avx512vbmi",
+			"avx512ifma",
+			"sha",
+			"umip"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "18.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"cascadelake": {
+		From:   []string{"skylake_avx512"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c",
+			"movbe",
+			"fma",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"rdseed",
+			"adx",
+			"clflushopt",
+			"xsavec",
+			"xsaveopt",
+			"avx512f",
+			"clwb",
+			"avx512vl",
+			"avx512bw",
+			"avx512dq",
+			"avx512cd",
+			"avx512_vnni"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Versions: "9.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "11.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "19.0.1:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"icelake": {
+		From:   []string{"cascadelake", "cannonlake"},
+		Vendor: []string{"GenuineIntel"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"ssse3",
+			"sse4_1",
+			"sse4_2",
+			"popcnt",
+			"aes",
+			"pclmulqdq",
+			"avx",
+			"rdrand",
+			"f16c",
+			"movbe",
+			"fma",
+			"avx2",
+			"bmi1",
+			"bmi2",
+			"rdseed",
+			"adx",
+			"clflushopt",
+			"xsavec",
+			"xsaveopt",
+			"avx512f",
+			"avx512vl",
+			"avx512bw",
+			"avx512dq",
+			"avx512cd",
+			"avx512vbmi",
+			"avx512ifma",
+			"sha_ni",
+			"umip",
+			"clwb",
+			"rdpid",
+			"gfni",
+			"avx512_vbmi2",
+			"avx512_vpopcntdq",
+			"avx512_bitalg",
+			"avx512_vnni",
+			"vpclmulqdq",
+			"vaes"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Name:     "icelake-client",
+					Versions: "8.0:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "7.0:",
+					Name:     "icelake-client",
+					Flags:    "-march={name} -mtune={name}",
+				},
+				{
+					Versions: "6.0:6.9",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Name:     "icelake-client",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"apple-clang": {
+				{
+					Versions: "10.0.1:",
+					Name:     "icelake-client",
+					Flags:    "-march={name} -mtune={name}",
+				},
+				{
+					Versions: "10.0.0:10.0.99",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "18.0:",
+					Name:     "icelake-client",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+		},
+	},
+	"k10": {
+		From:   []string{"x86_64"},
+		Vendor: []string{"AuthenticAMD"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"sse4a",
+			"abm",
+			"cx16",
+			"3dnow",
+			"3dnowext"},
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Name:     "amdfam10",
+					Versions: "4.3:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Name:     "amdfam10",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Name:     "amdfam10",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "16.0:",
+					Flags:    "-msse2",
+					Warnings: []string{"Intel's compilers may or may not optimize to the same degree for non-Intel microprocessors for optimizations that are not unique to Intel microprocessors"},
+				},
+			},
+		},
+	},
+	"bulldozer": {
+		From:   []string{"x86_64_v2"},
+		Vendor: []string{"AuthenticAMD"},
+		Features: []string{"mmx",
+			"sse",
+			"sse2",
+			"sse4a",
+			"abm",
+			"avx",
+			"xop",
+			"fma4",
+			"aes",
+			"pclmulqdq",
+			"cx16",
+			"ssse3",
+			"sse4_1",
+			"sse4_2"},
+
+		Compilers: map[string][]Compiler{
+			"gcc": {
+				{
+					Name:     "bdver1",
+					Versions: "4.7:",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"clang": {
+				{
+					Versions: "3.9:",
+					Name:     "bdver1",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"aocc": {
+				{
+					Versions: "2.2:",
+					Name:     "bdver1",
+					Flags:    "-march={name} -mtune={name}",
+				},
+			},
+			"intel": {
+				{
+					Versions: "16.0:",
+					Flags:    "-msse3",
+					Warnings: []string{"Intel's compilers may or may not optimize to the same degree for non-Intel microprocessors for optimizations that are not unique to Intel microprocessors"},
 				},
 			},
 		},
@@ -1182,29 +1187,29 @@ var CpuArches = map[string]Microarchitecture{
 			"tbm"},
 
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "bdver2",
 					Versions: "4.7:",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Name:     "bdver2",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"aocc": []Compiler{
-				Compiler{
+			"aocc": {
+				{
 					Versions: "2.2:",
 					Name:     "bdver2",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"intel": []Compiler{
-				Compiler{
+			"intel": {
+				{
 					Versions: "16.0:",
 					Flags:    "-msse3",
 					Warnings: []string{"Intel's compilers may or may not optimize to the same degree for non-Intel microprocessors for optimizations that are not unique to Intel microprocessors"},
@@ -1236,29 +1241,29 @@ var CpuArches = map[string]Microarchitecture{
 			"tbm"},
 
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "bdver3",
 					Versions: "4.8:",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Name:     "bdver3",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"aocc": []Compiler{
-				Compiler{
+			"aocc": {
+				{
 					Versions: "2.2:",
 					Name:     "bdver3",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"intel": []Compiler{
-				Compiler{
+			"intel": {
+				{
 					Versions: "16.0:",
 					Flags:    "-msse4.2",
 					Warnings: []string{"Intel's compilers may or may not optimize to the same degree for non-Intel microprocessors for optimizations that are not unique to Intel microprocessors"},
@@ -1293,29 +1298,29 @@ var CpuArches = map[string]Microarchitecture{
 			"tbm"},
 
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "bdver4",
 					Versions: "4.9:",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Name:     "bdver4",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"aocc": []Compiler{
-				Compiler{
+			"aocc": {
+				{
 					Versions: "2.2:",
 					Name:     "bdver4",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"intel": []Compiler{
-				Compiler{
+			"intel": {
+				{
 					Versions: "16.0:",
 					Flags:    "-march={name} -mtune={name}",
 					Name:     "core-avx2",
@@ -1354,29 +1359,29 @@ var CpuArches = map[string]Microarchitecture{
 			"popcnt"},
 
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "znver1",
 					Versions: "6.0:",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "4.0:",
 					Name:     "znver1",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"aocc": []Compiler{
-				Compiler{
+			"aocc": {
+				{
 					Versions: "2.2:",
 					Name:     "znver1",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"intel": []Compiler{
-				Compiler{
+			"intel": {
+				{
 					Versions: "16.0:",
 					Flags:    "-march={name} -mtune={name}",
 					Name:     "core-avx2",
@@ -1416,29 +1421,29 @@ var CpuArches = map[string]Microarchitecture{
 			"clwb"},
 
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "znver2",
 					Versions: "9.0:",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "9.0:",
 					Name:     "znver2",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"aocc": []Compiler{
-				Compiler{
+			"aocc": {
+				{
 					Versions: "2.2:",
 					Name:     "znver2",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"intel": []Compiler{
-				Compiler{
+			"intel": {
+				{
 					Versions: "16.0:",
 					Flags:    "-march={name} -mtune={name}",
 					Name:     "core-avx2",
@@ -1480,22 +1485,22 @@ var CpuArches = map[string]Microarchitecture{
 			"vpclmulqdq",
 			"pku"},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "znver3",
 					Versions: "10.3:",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "12.0:",
 					Name:     "znver3",
 					Flags:    "-march={name} -mtune={name}",
 				},
 			},
-			"aocc": []Compiler{
-				Compiler{
+			"aocc": {
+				{
 					Versions: "3.0:",
 					Name:     "znver3",
 					Flags:    "-march={name} -mtune={name}",
@@ -1508,15 +1513,15 @@ var CpuArches = map[string]Microarchitecture{
 		Vendor:   []string{"generic"},
 		Features: []string{},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "powerpc64",
 					Versions: ":",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: ":",
 					Name:     "znver3",
 					Flags:    "-mcpu={name} -mtune={name}",
@@ -1530,14 +1535,14 @@ var CpuArches = map[string]Microarchitecture{
 		Generation: 7,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "4.4:",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Name:     "znver3",
 					Flags:    "-mcpu={name} -mtune={name}",
@@ -1551,19 +1556,19 @@ var CpuArches = map[string]Microarchitecture{
 		Generation: 8,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "4.9:",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
-				Compiler{
+				{
 					Versions: "4.8:4.8.5",
 					Flags:    "-mcpu={name} -mtune={name}",
 					Warnings: []string{"Using GCC 4.8 to optimize for Power 8 might not work if you are not on Red Hat Enterprise Linux 7, where a custom backport of the feature has been done. Upstream support from GCC starts in version 4.9"},
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
@@ -1576,19 +1581,19 @@ var CpuArches = map[string]Microarchitecture{
 		Generation: 9,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "6.0:",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
-				Compiler{
+				{
 					Versions: "4.8:4.8.5",
 					Flags:    "-mcpu={name} -mtune={name}",
 					Warnings: []string{"Using GCC 4.8 to optimize for Power 8 might not work if you are not on Red Hat Enterprise Linux 7, where a custom backport of the feature has been done. Upstream support from GCC starts in version 4.9"},
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
@@ -1601,15 +1606,15 @@ var CpuArches = map[string]Microarchitecture{
 		Features: []string{},
 
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "powerpc64le",
 					Versions: "4.8:",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: ":",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
@@ -1622,21 +1627,21 @@ var CpuArches = map[string]Microarchitecture{
 		Generation: 8,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "power8",
 					Versions: "4.9:",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
-				Compiler{
+				{
 					Name:     "power8",
 					Warnings: []string{"Using GCC 4.8 to optimize for Power 8 might not work if you are not on Red Hat Enterprise Linux 7, where a custom backport of the feature has been done. Upstream support from GCC starts in version 4.9"},
 					Versions: "4.8:4.8.5",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Family:   []string{"ppc64le"},
 					Name:     "power8",
@@ -1651,15 +1656,15 @@ var CpuArches = map[string]Microarchitecture{
 		Generation: 9,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Name:     "power9",
 					Versions: "6.0:",
 					Flags:    "-mcpu={name} -mtune={name}",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Family:   []string{"ppc64le"},
 					Name:     "power9",
@@ -1673,26 +1678,26 @@ var CpuArches = map[string]Microarchitecture{
 		Vendor:   []string{"generic"},
 		Features: []string{},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "4.8.0:",
 					Flags:    "-march=armv8-a -mtune=generic",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: ":",
 					Flags:    "-march=armv8-a -mtune=generic",
 				},
 			},
-			"apple-clang": []Compiler{
-				Compiler{
+			"apple-clang": {
+				{
 					Versions: ":",
 					Flags:    "-march=armv8-a -mtune=generic",
 				},
 			},
-			"arm": []Compiler{
-				Compiler{
+			"arm": {
+				{
 					Versions: ":",
 					Flags:    "-march=armv8-a -mtune=generic",
 				},
@@ -1714,30 +1719,30 @@ var CpuArches = map[string]Microarchitecture{
 			"cpuid",
 			"asimdrdm"},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "4.8:4.8.9",
 					Flags:    "-march=armv8-a",
 				},
-				Compiler{
+				{
 					Versions: "4.9:5.9",
 					Flags:    "-march=armv8-a+crc+crypto",
 				},
-				Compiler{
+				{
 					Versions: "6:6.9",
 					Flags:    "-march=armv8.1-a+crc+crypto",
 				},
-				Compiler{
+				{
 					Versions: "7:",
 					Flags:    "-mcpu=thunderx2t99",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:4.9",
 					Flags:    "-march=armv8.1-a+crc+crypto",
 				},
-				Compiler{
+				{
 					Versions: "5:",
 					Flags:    "-mcpu=thunderx2t99",
 				},
@@ -1765,40 +1770,40 @@ var CpuArches = map[string]Microarchitecture{
 			"sve"},
 
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "4.8:4.8.9",
 					Flags:    "-march=armv8-a",
 				},
-				Compiler{
+				{
 					Versions: "4.9:5.9",
 					Flags:    "-march=armv8-a+crc+crypto",
 				},
-				Compiler{
+				{
 					Versions: "6:6.9",
 					Flags:    "-march=armv8.1-a+crc+crypto",
 				},
-				Compiler{
+				{
 					Versions: "7:7.9",
 					Flags:    "-march=armv8.2-a+crc+crypto+fp16",
 				},
-				Compiler{
+				{
 					Versions: "8:",
 					Flags:    "-march=armv8.2-a+crc+aes+sha2+fp16+sve -msve-vector-bits=512",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:4.9",
 					Flags:    "-march=armv8.2-a+crc+crypto+fp16",
 				},
-				Compiler{
+				{
 					Versions: "5:",
 					Flags:    "-march=armv8.2-a+crc+crypto+fp16+sve",
 				},
 			},
-			"arm": []Compiler{
-				Compiler{
+			"arm": {
+				{
 					Versions: "20:",
 					Flags:    "-march=armv8.2-a+crc+crypto+fp16+sve",
 				},
@@ -1818,28 +1823,28 @@ var CpuArches = map[string]Microarchitecture{
 			"crc32",
 			"cpuid"},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "4.8:4.8.9",
 					Flags:    "-march=armv8-a",
 				},
-				Compiler{
+				{
 					Versions: "4.9:5.9",
 					Flags:    "-march=armv8-a+crc+crypto",
 				},
-				Compiler{
+				{
 					Versions: "6:",
 					Flags:    "-march=armv8-a+crc+crypto -mtune=cortex-a72",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:",
 					Flags:    "-march=armv8-a+crc+crypto",
 				},
 			},
-			"arm": []Compiler{
-				Compiler{
+			"arm": {
+				{
 					Versions: "20:",
 					Flags:    "-march=armv8.2-a+crc+crypto+fp16+sve",
 				},
@@ -1867,48 +1872,48 @@ var CpuArches = map[string]Microarchitecture{
 			"asimddp",
 			"ssbs"},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "4.8:4.8.9",
 					Flags:    "-march=armv8-a",
 				},
-				Compiler{
+				{
 					Versions: "4.9:5.9",
 					Flags:    "-march=armv8-a+crc+crypto",
 				},
-				Compiler{
+				{
 					Versions: "6:6.9",
 					Flags:    "-march=armv8.1-a",
 				},
-				Compiler{
+				{
 					Versions: "7:7.9",
 					Flags:    "-march=armv8.2-a+fp16 -mtune=cortex-a72",
 				},
-				Compiler{
+				{
 					Versions: "8.0:8.0",
 					Flags:    "-march=armv8.2-a+fp16+dotprod+crypto -mtune=cortex-a72",
 				},
-				Compiler{
+				{
 					Versions: "8.1:8.9",
 					Flags:    "-march=armv8.2-a+fp16+rcpc+dotprod+crypto -mtune=cortex-a72",
 				},
-				Compiler{
+				{
 					Versions: "9.0:",
 					Flags:    "-march=armv8.2-a+fp16+rcpc+dotprod+crypto -mtune=neoverse-n1",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "3.9:4.9",
 					Flags:    "-march=armv8.2-a+fp16+crc+crypto",
 				},
-				Compiler{
+				{
 					Versions: "5:",
 					Flags:    "-march=armv8.2-a+fp16+rcpc+dotprod+crypto",
 				},
 			},
-			"arm": []Compiler{
-				Compiler{
+			"arm": {
+				{
 					Versions: "20:",
 					Flags:    "-march=armv8.2-a+fp16+rcpc+dotprod+crypto",
 				},
@@ -1920,20 +1925,20 @@ var CpuArches = map[string]Microarchitecture{
 		Vendor:   []string{"Apple"},
 		Features: []string{},
 		Compilers: map[string][]Compiler{
-			"gcc": []Compiler{
-				Compiler{
+			"gcc": {
+				{
 					Versions: "8.0:",
 					Flags:    "-march=armv8.4-a -mtune=generic",
 				},
 			},
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: "9.0:",
 					Flags:    "-march=armv8.4-a",
 				},
 			},
-			"apple-clang": []Compiler{
-				Compiler{
+			"apple-clang": {
+				{
 					Versions: "11.0:",
 					Flags:    "-march=armv8.4-a",
 				},
@@ -1945,15 +1950,15 @@ var CpuArches = map[string]Microarchitecture{
 		Vendor:   []string{"generic"},
 		Features: []string{},
 		Compilers: map[string][]Compiler{
-			"clang": []Compiler{
-				Compiler{
+			"clang": {
+				{
 					Versions: ":",
 					Family:   []string{"arm"},
 					Flags:    "-march={family} -mcpu=generic",
 				},
 			},
-			"apple-clang": []Compiler{
-				Compiler{
+			"apple-clang": {
+				{
 					Versions: "11.0:",
 					Flags:    "-march=armv8.4-a",
 				},
@@ -1961,44 +1966,40 @@ var CpuArches = map[string]Microarchitecture{
 		},
 	},
 	"ppc": {
-		From:      []string{},
-		Vendor:    []string{"generic"},
-		Features:  []string{},
-		Compilers: map[string][]Compiler{},
+		From:     []string{},
+		Vendor:   []string{"generic"},
+		Features: []string{},
 	},
 	"ppcle": {
-		From:      []string{},
-		Vendor:    []string{"generic"},
-		Features:  []string{},
-		Compilers: map[string][]Compiler{},
+		From:     []string{},
+		Vendor:   []string{"generic"},
+		Features: []string{},
 	},
 	"sparc": {
-		From:      []string{},
-		Vendor:    []string{"generic"},
-		Features:  []string{},
-		Compilers: map[string][]Compiler{},
+		From:     []string{},
+		Vendor:   []string{"generic"},
+		Features: []string{},
 	},
 	"sparc64": {
-		From:      []string{},
-		Vendor:    []string{"generic"},
-		Features:  []string{},
-		Compilers: map[string][]Compiler{},
+		From:     []string{},
+		Vendor:   []string{"generic"},
+		Features: []string{},
 	},
 }
 
 type FeatureAlias struct {
-	Reason   string   `json:reason`
-	AnyOf    []string `json:any_of`
-	Families []string `json:families`
+	Reason   string   `json:"reason"`
+	AnyOf    []string `json:"any_of"`
+	Families []string `json:"families"`
 }
 
 var FeatureAliases = map[string]FeatureAlias{
-	"sse": FeatureAlias{
+	"sse": {
 		Reason: "ssse3 is a superset of sse3 and might be the only one listed",
 		AnyOf:  []string{"ssse3"},
 	},
 
-	"avx512": FeatureAlias{
+	"avx512": {
 		Reason: "avx512 indicates generic support for any of the avx512 instruction sets",
 		AnyOf: []string{
 			"avx512f",
@@ -2007,30 +2008,30 @@ var FeatureAliases = map[string]FeatureAlias{
 			"avx512dq",
 			"avx512cd"},
 	},
-	"altivec": FeatureAlias{
+	"altivec": {
 		Reason: "altivec is supported by Power PC architectures, but might not be listed in features",
 		Families: []string{
 			"ppc64le",
 			"ppc64"},
 	},
-	"vsx": FeatureAlias{
+	"vsx": {
 		Reason:   "VSX alitvec extensions are supported by PowerISA from v2.06 (Power7+), but might not be listed in features",
-		Families: {"ppc64le", "ppc64"},
+		Families: []string{"ppc64le", "ppc64"},
 	},
-	"fma": FeatureAlias{
+	"fma": {
 		Reason: "FMA has been supported by PowerISA since Power1, but might not be listed in features",
 		Families: []string{"ppc64le",
 			"ppc64"},
 	},
-	"sse4.1": FeatureAlias{
+	"sse4.1": {
 		Reason: "permits to refer to sse4_1 also as sse4.1",
 		AnyOf:  []string{"sse4_1"},
 	},
-	"sse4.2": FeatureAlias{
+	"sse4.2": {
 		Reason: "permits to refer to sse4_2 also as sse4.2",
 		AnyOf:  []string{"sse4_2"},
 	},
-	"neon": FeatureAlias{
+	"neon": {
 		Reason:   "NEON is required in all standard ARMv8 implementations",
 		Families: []string{"aarch64"},
 	},
@@ -2040,7 +2041,7 @@ var FeatureAliases = map[string]FeatureAlias{
 type Conversion map[string]string
 
 var Conversions = map[string]Conversion{
-	"arm_vendors": Conversion{
+	"arm_vendors": {
 		"0x41": "ARM",
 		"0x42": "Broadcom",
 		"0x43": "Cavium",
@@ -2059,7 +2060,7 @@ var Conversions = map[string]Conversion{
 		"0x68": "HXT",
 		"0x69": "Intel",
 	},
-	"darwin_flags": Conversion{
+	"darwin_flags": {
 		"sse4.1":  "sse4_1",
 		"sse4.2":  "sse4_2",
 		"avx1.0":  "avx",
