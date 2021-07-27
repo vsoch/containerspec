@@ -21,16 +21,30 @@ academic languages (Python, C++, etc.) I also really love Go and I don't get eno
 opportunity to use it. Another reason is strong typing and having data structures
 conform to a know standard without needing libraries like jsonschema.
 
+## Usage
+
+To build the library:
+
+```bash
+$ make
+```
+
+This will compile an executable, `containerspec` that you can interact with.
 
 ## Commands
+
+### Host
 
 The first thing you might want to do is extract metadata for a host. Technically,
 the only difference between a host and container is the layer of abstraction. We'd want
 to run the same thing on our host as in the container.
 
 ```bash
-$ TODO
+$ $ ./containerspec host
+{x86 [] [generic] 0 [] map[]}
 ```
+
+
  
 # TODO
 
