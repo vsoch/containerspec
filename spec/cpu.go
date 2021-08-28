@@ -1,41 +1,42 @@
 package spec
 
+/*
 var CpuArches = map[string]Microarchitecture{
 	"x86": {
 		Name:   "x86",
-		Vendor: []string{"generic"},
+		Vendor: "generic",
 	},
 	"i686": {
 		Name:   "i686",
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 	},
 	"pentium2": {
 		Name:     "pentium2",
 		From:     []string{"i686"},
-		Vendor:   []string{"GenuineIntel"},
+		Vendor:   "GenuineIntel",
 		Features: []string{"mmx"},
 	},
 	"pentium3": {
 		Name:     "pentium3",
 		From:     []string{"pentium2"},
-		Vendor:   []string{"GenuineIntel"},
+		Vendor:   "GenuineIntel",
 		Features: []string{"mmx", "sse"},
 	},
 	"pentium4": {
 		Name:     "pentium4",
 		From:     []string{"pentium3"},
-		Vendor:   []string{"GenuineIntel"},
+		Vendor:   "GenuineIntel",
 		Features: []string{"mmx", "sse", "sse2"},
 	},
 	"prescott": {
 		Name:     "prescott",
 		From:     []string{"pentium4"},
-		Vendor:   []string{"GenuineIntel"},
+		Vendor:   "GenuineIntel",
 		Features: []string{"mmx", "sse", "sse2", "sse3"},
 	},
 	"x86_64": {
 		Name:   "x86_64",
-		Vendor: []string{"generic"},
+		Vendor: "generic",
 		Compilers: map[string][]Compiler{
 			"gcc": {
 				{
@@ -82,7 +83,7 @@ var CpuArches = map[string]Microarchitecture{
 	"x86_64_v2": {
 		Name:   "x86_64_v2",
 		From:   []string{"x86_64"},
-		Vendor: []string{"generic"},
+		Vendor: "generic",
 		Features: []string{"cx16",
 			"lahf_lm",
 			"mmx",
@@ -121,7 +122,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"x86_64_v3": {
 		From:   []string{"x86_64_v2"},
-		Vendor: []string{"generic"},
+		Vendor: "generic",
 		Features: []string{"cx16",
 			"lahf_lm",
 			"mmx",
@@ -177,7 +178,7 @@ var CpuArches = map[string]Microarchitecture{
 	"x86_64_v4": {
 
 		From:   []string{"x86_64_v3"},
-		Vendor: []string{"generic"},
+		Vendor: "generic",
 		Features: []string{"cx16",
 			"lahf_lm",
 			"mmx",
@@ -237,7 +238,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"nocona": {
 		From:   []string{"x86_64"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -278,7 +279,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"core2": {
 		From:   []string{"nocona"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -318,7 +319,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"nehalem": {
 		From:   []string{"core2", "x86_64_v2"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -367,7 +368,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"westmere": {
 		From:   []string{"nehalem"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -413,7 +414,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"sandybridge": {
 		From:   []string{"westmere"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -469,7 +470,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"ivybridge": {
 		From:   []string{"sandybridge"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -527,7 +528,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"haswell": {
 		From:   []string{"ivybridge", "x86_64_v3"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -592,7 +593,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"broadwell": {
 		From:   []string{"haswell"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -647,7 +648,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"skylake": {
 		From:   []string{"broadwell"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -705,7 +706,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"mic_knl": {
 		From:   []string{"broadwell"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -769,7 +770,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"skylake_avx512": {
 		From:   []string{"skylake", "x86_64_v4"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -837,7 +838,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"cannonlake": {
 		From:   []string{"skylake"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -904,7 +905,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"cascadelake": {
 		From:   []string{"skylake_avx512"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -969,7 +970,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"icelake": {
 		From:   []string{"cascadelake", "cannonlake"},
-		Vendor: []string{"GenuineIntel"},
+		Vendor: "GenuineIntel",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -1058,7 +1059,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"k10": {
 		From:   []string{"x86_64"},
-		Vendor: []string{"AuthenticAMD"},
+		Vendor: "AuthenticAMD",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -1100,7 +1101,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"bulldozer": {
 		From:   []string{"x86_64_v2"},
-		Vendor: []string{"AuthenticAMD"},
+		Vendor: "AuthenticAMD",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -1149,7 +1150,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"piledriver": {
 		From:   []string{"bulldozer"},
-		Vendor: []string{"AuthenticAMD"},
+		Vendor: "AuthenticAMD",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -1202,7 +1203,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"steamroller": {
 		From:   []string{"piledriver"},
-		Vendor: []string{"AuthenticAMD"},
+		Vendor: "AuthenticAMD",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -1256,7 +1257,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"excavator": {
 		From:   []string{"steamroller", "x86_64_v3"},
-		Vendor: []string{"AuthenticAMD"},
+		Vendor: "AuthenticAMD",
 		Features: []string{"mmx",
 			"sse",
 			"sse2",
@@ -1314,7 +1315,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"zen": {
 		From:   []string{"x86_64_v3"},
-		Vendor: []string{"AuthenticAMD"},
+		Vendor: "AuthenticAMD",
 		Features: []string{"bmi1",
 			"bmi2",
 			"f16c",
@@ -1375,7 +1376,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"zen2": {
 		From:   []string{"zen"},
-		Vendor: []string{"AuthenticAMD"},
+		Vendor: "AuthenticAMD",
 		Features: []string{"bmi1",
 			"bmi2",
 			"f16c",
@@ -1437,7 +1438,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"zen3": {
 		From:   []string{"zen2"},
-		Vendor: []string{"AuthenticAMD"},
+		Vendor: "AuthenticAMD",
 		Features: []string{"bmi1",
 			"bmi2",
 			"f16c",
@@ -1493,7 +1494,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"ppc64": {
 		From:     []string{},
-		Vendor:   []string{"generic"},
+		Vendor:   "generic",
 		Features: []string{},
 		Compilers: map[string][]Compiler{
 			"gcc": {
@@ -1514,7 +1515,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"power7": {
 		From:       []string{"ppc64"},
-		Vendor:     []string{"IBM"},
+		Vendor:     "IBM",
 		Generation: 7,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
@@ -1535,7 +1536,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"power8": {
 		From:       []string{"power7"},
-		Vendor:     []string{"IBM"},
+		Vendor:     "IBM",
 		Generation: 8,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
@@ -1560,7 +1561,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"power9": {
 		From:       []string{"power8"},
-		Vendor:     []string{"IBM"},
+		Vendor:     "IBM",
 		Generation: 9,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
@@ -1585,7 +1586,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"ppc64le": {
 		From:     []string{},
-		Vendor:   []string{"generic"},
+		Vendor:   "generic",
 		Features: []string{},
 
 		Compilers: map[string][]Compiler{
@@ -1606,7 +1607,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"power8le": {
 		From:       []string{"ppc64le"},
-		Vendor:     []string{"IBM"},
+		Vendor:     "IBM",
 		Generation: 8,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
@@ -1635,7 +1636,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"power9le": {
 		From:       []string{"power8le"},
-		Vendor:     []string{"IBM"},
+		Vendor:     "IBM",
 		Generation: 9,
 		Features:   []string{},
 		Compilers: map[string][]Compiler{
@@ -1658,7 +1659,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"aarch64": {
 		From:     []string{},
-		Vendor:   []string{"generic"},
+		Vendor:   "generic",
 		Features: []string{},
 		Compilers: map[string][]Compiler{
 			"gcc": {
@@ -1689,7 +1690,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"thunderx2": {
 		From:   []string{"aarch64"},
-		Vendor: []string{"Cavium"},
+		Vendor: "Cavium",
 		Features: []string{"fp",
 			"asimd",
 			"evtstrm",
@@ -1734,7 +1735,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"a64fx": {
 		From:   []string{"aarch64"},
-		Vendor: []string{"Fujitsu"},
+		Vendor: "Fujitsu",
 		Features: []string{"fp",
 			"asimd",
 			"evtstrm",
@@ -1795,7 +1796,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"graviton": {
 		From:   []string{"aarch64"},
-		Vendor: []string{"ARM"},
+		Vendor: "ARM",
 		Features: []string{"fp",
 			"asimd",
 			"evtstrm",
@@ -1836,7 +1837,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"graviton2": {
 		From:   []string{"aarch64"},
-		Vendor: []string{"ARM"},
+		Vendor: "ARM",
 		Features: []string{"fp",
 			"asimd",
 			"evtstrm",
@@ -1905,7 +1906,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"m1": {
 		From:     []string{"aarch64"},
-		Vendor:   []string{"Apple"},
+		Vendor:   "Apple",
 		Features: []string{},
 		Compilers: map[string][]Compiler{
 			"gcc": {
@@ -1930,7 +1931,7 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"arm": {
 		From:     []string{},
-		Vendor:   []string{"generic"},
+		Vendor:   "generic",
 		Features: []string{},
 		Compilers: map[string][]Compiler{
 			"clang": {
@@ -1950,22 +1951,22 @@ var CpuArches = map[string]Microarchitecture{
 	},
 	"ppc": {
 		From:     []string{},
-		Vendor:   []string{"generic"},
+		Vendor:   "generic",
 		Features: []string{},
 	},
 	"ppcle": {
 		From:     []string{},
-		Vendor:   []string{"generic"},
+		Vendor:   "generic",
 		Features: []string{},
 	},
 	"sparc": {
 		From:     []string{},
-		Vendor:   []string{"generic"},
+		Vendor:   "generic",
 		Features: []string{},
 	},
 	"sparc64": {
 		From:     []string{},
-		Vendor:   []string{"generic"},
+		Vendor:   "generic",
 		Features: []string{},
 	},
 }
@@ -2042,3 +2043,4 @@ var Conversions = map[string]Conversion{
 		"xsave":   "xsavec xsaveopt",
 	},
 }
+*/
